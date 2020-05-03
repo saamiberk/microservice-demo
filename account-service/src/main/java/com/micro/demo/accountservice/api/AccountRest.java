@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("account")
 public class AccountRest {
@@ -21,13 +23,18 @@ public class AccountRest {
     public ResponseEntity<Account> save(@RequestBody Account account){
         return ResponseEntity.ok(accountService.save(account));
     }
-    @PutMapping
-    public ResponseEntity<Account> update(@RequestBody Account account){
-        return ResponseEntity.ok(accountService.update(account));
+    @PutMapping("/{id}")
+    public ResponseEntity<Account> update(@PathVariable("id") String id, @RequestBody Account account){
+        return ResponseEntity.ok(accountService.update(id, account));
     }
     @DeleteMapping
     public void delete(String id){
         accountService.delete(id);
+    }
+
+    @GetMapping
+    public List<Account> findAll(){
+        return accountService.findAll();
     }
 
 }
